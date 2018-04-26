@@ -12,7 +12,6 @@ params.stoppingCriteria = 'maxIter';
 params.maxIter = 5000; % maximum number of iteration
 params.tolCost = 0.1;  
 params.displayTraining = true;
-params.displayStep = round(params.maxIter/10);
-
+params.displayStep = round(params.maxIter/10;
 end
 

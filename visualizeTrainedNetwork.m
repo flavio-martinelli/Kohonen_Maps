@@ -1,15 +1,17 @@
-function visualizeTrainedNetwork(Results, Params)
+function visualizeTrainedNetwork(centers, title, figureIndex)
 
-figure
+sizeK = sqrt(size(centers,1));
 
-for i=1:Params.sizeK^2
-    subplot(Params.sizeK,Params.sizeK,i)
-    imagesc(reshape(Results.centers(i,:),28,28)')
+figure(figureIndex)
+
+for i=1:sizeK^2
+    subplot(sizeK,sizeK,i)
+    imagesc(reshape(centers(i,:),28,28)')
     colormap gray
     axis off
 end
 
-suptitle('Centers of the trained network')
+suptitle(title)
 
 end
 
