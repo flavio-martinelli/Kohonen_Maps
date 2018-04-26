@@ -8,11 +8,11 @@ params.dim = 28*28; % dimension of the images
 params.range = 255; % input range of the images ([0, 255])
 params.neighbor = reshape(1:params.sizeK^2,params.sizeK,params.sizeK); % neighborhood matrix
 params.eta = 0.01; %learning rate
-params.stoppingCriteria = 'maxIter'; 
+params.stoppingCriteria = 'maxIter';  %'tolCost', 'maxIter'
 params.maxIter = 5000; % maximum number of iteration
 params.tolCost = 0.1;  
-params.displayTraining = true;
-params.displayStep = round(params.maxIter/10);
+params.displayTraining = false;
+params.displayStep = 100; %round(params.maxIter/10);
 
 end
 

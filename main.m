@@ -6,5 +6,5 @@ Data = loadData('Zinédine Zidane');
 visualizeTargetDigits(Data)
 Params = createParams();
 Results = trainNetwork(Data, Params);
-visualizeTrainedNetwork(Results.centers, Params);
+visualizeTrainedNetwork(Results.centers, 'trained network', 1);
 
