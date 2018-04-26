@@ -2,7 +2,7 @@ close all
 clear variables
 clc
 
-Data = loadData('Zinédine Zidane');
+Data = loadData('Flatom');
 visualizeTargetDigits(Data)
 Params = createParams();
 Results = trainNetwork(Data, Params);
