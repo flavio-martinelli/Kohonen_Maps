@@ -1,8 +1,9 @@
 function Results = trainNetwork(Data, Params)
 
+rng(Params.seed)
 centers = rand(Params.sizeK^2,Params.dim)*Params.range;
 iR=mod(randperm(Params.maxIter), size(Data.data, 1)+1); iR(iR==0) = 1;
-costs = zeros(1, Params.maxIter);
+updateSteps = zeros(1, Params.maxIter);
 old_centers = centers;
 
 switch Params.stoppingCriteria
@@ -13,7 +14,7 @@ switch Params.stoppingCriteria
         for t=1:Params.maxIter
             i=iR(t);
             new_centers = som_step(old_centers, Data.data(i,:), Params.neighbor, Params.eta, Params.sigma);
-            costs(1,t) = getCost(new_centers, old_centers);
+            updateSteps(1,t) = getUpdateStep(new_centers, old_centers);
             old_centers = new_centers;
             
             if Params.displayTraining && (mod(t, Params.displayStep)==0 || t==1)
@@ -21,35 +22,35 @@ switch Params.stoppingCriteria
             end
         end
         
-    case 'tolCost'
-        % stopping criteria = ||cost(t+1) - cost(t)|| > tolCost
+    case 'tolUpdateStep'
+        % stopping criteria = ||updateStep(t+1) - updateStep(t)|| > tolUpdateStep
         
         t = 1;
-        costs(1,1) = inf;
-        costStep = Params.tolCost + 1;
-        while costStep > Params.tolCost && t<Params.maxIter
+        updateSteps(1,1) = inf;
+        updateStep = Params.tolUpdateStep + 1;
+        while updateStep > Params.tolUpdateStep && t<Params.maxIter
             i=iR(t);
             new_centers = som_step(old_centers, Data.data(i,:), Params.neighbor, Params.eta, Params.sigma);
-            costs(1,t+1) = getCost(new_centers, old_centers);
+            updateSteps(1,t+1) = getUpdateStep(new_centers, old_centers);
             old_centers = new_centers;
-            costStep = abs(costs(t+1)-costs(t));
+            updateStep = abs(updateSteps(t+1)-updateSteps(t));
             t = t+1;
             if Params.displayTraining && (mod(t, Params.displayStep)==0 || t==1)
                 visualizeTrainedNetwork(old_centers, ['network state at iteration: ', num2str(t)], 100)
             end
             
         end
-        costs = costs(find(costs)); costs = costs(2:end);
+        updateSteps = updateSteps(2:t);
         
 end
 
 % store
 Results.centers = new_centers;
-Results.costs = costs;
+Results.updateSteps = updateSteps;
 
 % visualize
 figure
-plot(costs)
+plot(updateSteps)
 xlabel('iterations')
 ylabel('cost function')
 grid on
