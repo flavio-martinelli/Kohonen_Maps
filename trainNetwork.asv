@@ -28,9 +28,9 @@ switch Params.stoppingCriteria
         t = 1;
         updateStepMean = [];
         updateStepMeanDelta = [];
-        check_continueTraining = true;
+        continueTraining = true;
         
-        while check_continueTraining
+        while continueTraining
             
             i=iR(t);
             
@@ -46,32 +46,25 @@ switch Params.stoppingCriteria
                     updateStepMeanDelta = [updateStepMeanDelta, abs(updateStepMean(end) - updateStepMean(end-1))];
                 end
             end
-            
+
             if Params.displayTraining && (mod(t, Params.displayStep)==0 || t==1)
                 if mod(t, Params.displayStep)==0 || t==1
-                    visualizeTrainedNetwork(old_centers, ['network state at iteration: ', num2str(t)], 100)
+                visualizeTrainedNetwork(old_centers, ['network state at iteration: ', num2str(t)], 100)
                 end
                 if mod(t, Params.displayStep)==0 || t>= 2*Params.tolUpdateMeanWindow
-                    visualizeUpdateSteps(updateSteps, updateStepMean, updateStepMeanDelta,  t, Params, 101)
+                visualizeUpdateSteps(updateSteps, updateStepMean, updateStepMeanDelta,  t, Params, 101)
                 end
             end
             
             if t>= 2*Params.tolUpdateMeanWindow
-                check_updateStepMeanDelta = updateStepMeanDelta(end) > Params.tolUpdateStep;
-                check_maxIter = t<Params.maxIter;
-                check_continueTraining =  (check_updateStepMeanDelta && check_maxIter);
-                if ~check_updateStepMeanDelta
-                    disp('stopping criteria: mean difference of the update step smaller than the threshold')
-                end
-                if ~check_maxIter
-                    disp('stopping criteria: maximum number of iterations reached')
-                end
+                cheupdateStepMeanDelta = updateStepMeanDelta(end) > Params.tolUpdateStep
+                continueTraining =  ( && t<Params.maxIter);
             end
             
             t = t+1;
             
         end
-        updateSteps = updateSteps(1:t-1);
+        updateSteps = updateSteps(2:t);
         
 end
 

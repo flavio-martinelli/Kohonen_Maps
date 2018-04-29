@@ -15,7 +15,11 @@ title('mean')
 grid on
 
 subplot(313)
+clf
 plot((2:length(updateStepMeanDelta)+1)*Params.tolUpdateMeanWindow, updateStepMeanDelta)
+hold on
+hline(Params.tolUpdateStep)
+legend('mean difference', 'stopping criteria')
 xlabel('iterations')
 title('mean difference')
 grid on
