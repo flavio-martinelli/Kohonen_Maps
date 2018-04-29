@@ -2,9 +2,10 @@ close all
 clear variables
 clc
 
-Data = loadData('Flavio');
+Data = loadData('Tom');
 visualizeTargetDigits(Data)
 Params = createParams();
 Results = trainNetwork(Data, Params);
-visualizeTrainedNetwork(Results.centers, 'trained network', 1);
-
+visualizeNetwork(Results.centers, 'trained network', 10);
+Results = assignDigitsToPrototypes(Data, Results);
+visualizeNetwork(Results.estimatedDataOfPrototypes, 'labels in network', 11);

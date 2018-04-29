@@ -9,10 +9,10 @@ params.range = 255; % input range of the images ([0, 255])
 params.neighbor = reshape(1:params.sizeK^2,params.sizeK,params.sizeK); % neighborhood matrix
 params.eta = 0.01; %learning ratex
 params.stoppingCriteria = 'tolUpdateStep';  %'tolUpdateStep', 'maIter'
-params.maxIter = 2000; % maximum number of iteration
+params.maxIter = 1500; % maximum number of iteration
 params.tolUpdateStep = 0.001; % threshold  
 params.tolUpdateMeanWindow = 50; % iterations
-params.displayTraining = true;
+params.displayTraining = false;
 params.displayStep = 250; %round(params.maxIter/10);
 params.seed = 1; % random seed 
 

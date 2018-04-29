@@ -1,4 +1,4 @@
-function visualizeTrainedNetwork(centers, title, figureIndex)
+function visualizeNetwork(centers, title, figureIndex)
 
 sizeK = sqrt(size(centers,1));
 
