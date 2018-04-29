@@ -16,7 +16,6 @@ switch Params.stoppingCriteria
             new_centers = som_step(old_centers, Data.data(i,:), Params.neighbor, Params.eta, Params.sigma);
             updateSteps(1,t) = getUpdateStep(new_centers, old_centers);
             old_centers = new_centers;
-            
             if Params.displayTraining && (mod(t, Params.displayStep)==0 || t==1)
                 visualizeTrainedNetwork(old_centers, ['network state at iteration: ', num2str(t)], 100)
             end
@@ -33,11 +32,9 @@ switch Params.stoppingCriteria
         while check_continueTraining
             
             i=iR(t);
-            
             new_centers = som_step(old_centers, Data.data(i,:), Params.neighbor, Params.eta, Params.sigma);
             updateSteps(t) = getUpdateStep(new_centers, old_centers);
             old_centers = new_centers;
-            
             if mod(t,Params.tolUpdateMeanWindow) == 0
                 if t >= Params.tolUpdateMeanWindow
                     updateStepMean = [updateStepMean, mean(updateSteps(t-Params.tolUpdateMeanWindow+1:t)) ];
@@ -47,11 +44,11 @@ switch Params.stoppingCriteria
                 end
             end
             
-            if Params.displayTraining && (mod(t, Params.displayStep)==0 || t==1)
+            if Params.displayTraining
                 if mod(t, Params.displayStep)==0 || t==1
-                    visualizeTrainedNetwork(old_centers, ['network state at iteration: ', num2str(t)], 100)
+                    visualizeNetwork(old_centers, ['network state at iteration: ', num2str(t)], 100)
                 end
-                if mod(t, Params.displayStep)==0 || t>= 2*Params.tolUpdateMeanWindow
+                if mod(t, Params.displayStep)==0 && t>= 2*Params.tolUpdateMeanWindow
                     visualizeUpdateSteps(updateSteps, updateStepMean, updateStepMeanDelta,  t, Params, 101)
                 end
             end
@@ -72,10 +69,8 @@ switch Params.stoppingCriteria
             
         end
         updateSteps = updateSteps(1:t-1);
-        
 end
 
-% store
 Results.centers = new_centers;
 Results.updateSteps = updateSteps;
 
