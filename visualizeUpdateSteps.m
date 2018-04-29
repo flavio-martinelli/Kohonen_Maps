@@ -9,15 +9,15 @@ title('||centers_{old} - centers_{new}||')
 grid on
 
 subplot(312)
-plot(updateStepMean(1:iteration))
-xlabel('iterations')
-title('mean(||centers_{old} - centers_{new}||) over')
+plot(updateStepMean)
+xlabel('iterations scaled')
+title('mean')
 grid on
 
 subplot(313)
-plot(updateStepMeanDelta(1:iteration))
-xlabel('iterations')
-title('mean difference over iteration')
+plot(updateStepMeanDelta)
+xlabel('iterations scaled')
+title('mean difference')
 grid on
 
 end

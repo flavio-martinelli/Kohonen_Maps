@@ -26,38 +26,37 @@ switch Params.stoppingCriteria
         % stopping criteria = ||updateStep(t+1) - updateStep(t)|| > tolUpdateStep
         
         t = 1;
-        updateStepMean = zeros(1, Params.maxIter);
-        updateStepMeanDelta = zeros(1, Params.maxIter);
+        updateStepMean = [];
+        updateStepMeanDelta = [];
         continueTraining = true;
+        
         while continueTraining
             
             i=iR(t);
             
             new_centers = som_step(old_centers, Data.data(i,:), Params.neighbor, Params.eta, Params.sigma);
-            updateSteps(1,t) = getUpdateStep(new_centers, old_centers);
+            updateSteps(t) = getUpdateStep(new_centers, old_centers);
             old_centers = new_centers;
             
-            if t==1
-                 updateStepMean_t = updateSteps(1,t);
-                 updateStepMeanDelta_t =  updateSteps(1,t);
-            end
-            
             if mod(t,Params.tolUpdateMeanWindow) == 0
-                updateStepMean_t = mean(updateSteps(1,t-Params.tolUpdateMeanWindow+1:t));
-                updateStepMeanDelta_t = abs(updateStepMean(1,t) - updateStepMean(1,t-1));
+                if t >= Params.tolUpdateMeanWindow
+                    updateStepMean = [updateStepMean, mean(updateSteps(t-Params.tolUpdateMeanWindow+1:t)) ];
+                end
+                if t>= 2*Params.tolUpdateMeanWindow
+                    updateStepMeanDelta = [updateStepMeanDelta, abs(updateStepMean(end) - updateStepMean(end-1))];
+                end
             end
-            
-            updateStepMean(1,t) = updateStepMean_t;
-            updateStepMeanDelta(1,t) = updateStepMeanDelta_t;
-            
-            t = t+1;
-            
+
             if Params.displayTraining && (mod(t, Params.displayStep)==0 || t==1)
                 visualizeTrainedNetwork(old_centers, ['network state at iteration: ', num2str(t)], 100)
                 visualizeUpdateSteps(updateSteps, updateStepMean, updateStepMeanDelta, t, 101)
             end
             
-            continueTraining = updateStepMean_t > Params.tolUpdateStep && t<Params.maxIter;
+            if t>= 2*Params.tolUpdateMeanWindow
+                continueTraining =  (updateStepMeanDelta(end) > Params.tolUpdateStep && t<Params.maxIter);
+            end
+            
+            t = t+1;
             
         end
         updateSteps = updateSteps(2:t);
