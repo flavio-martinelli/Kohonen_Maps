@@ -1,0 +1,18 @@
+function visualizeLabelProbabilityInNetwork(labelCount, labelNames, title, figureIndex)
+
+sizeK = sqrt(size(labelCount,1));
+
+figure(figureIndex)
+labelNames = categorical(cellstr(num2str(labelNames)));
+
+for i=1:sizeK^2
+    subplot(sizeK,sizeK,i)
+    bar(labelNames, labelCount(i,:))
+    colormap gray
+    axis off
+end
+
+suptitle(title)
+
+end
+

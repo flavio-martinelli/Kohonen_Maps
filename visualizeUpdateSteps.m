@@ -12,13 +12,13 @@ subplot(312)
 plot((1:length(updateStepMean))*Params.tolUpdateMeanWindow, updateStepMean)
 xlabel('iterations')
 title('mean')
-grid on
+grid minor
 
 subplot(313)
 plot((2:length(updateStepMeanDelta)+1)*Params.tolUpdateMeanWindow, updateStepMeanDelta)
 xlabel('iterations')
 title('mean difference')
-grid on
+grid minor
 
 end
 

@@ -22,6 +22,7 @@ for p=1:numberOfPrototypes
  estimatedDataOfPrototypes(p,:) = Data.data(indicesOfDataWithEstimatedLabel(1),:);
 end
 
+Results.labelCountInPrototypes = labelCountInPrototypes;
 Results.estimatedLabelOfPrototypes = estimatedLabelOfPrototypes;
 Results.estimatedDataOfPrototypes = estimatedDataOfPrototypes;
 
