@@ -1,4 +1,4 @@
-function params = createParams(sizeK, sigma)
+function params = createParams(sizeK, sigma, displayTraining)
 %each neuron codes for a vector of size = dim values which represent an
 %image in the data space (data space size = 255*dim)
 
@@ -11,7 +11,7 @@ params.eta = 0.1; %learning ratex
 params.maxIter = 1500; % maximum number of iteration
 params.tolUpdateStep = 0; % threshold  
 params.tolUpdateMeanWindow = 50; % iterations
-params.displayTraining = true;
+params.displayTraining = displayTraining;
 params.displayStep = 250; %round(params.maxIter/10);
 params.seed = 1; % random seed 
 
