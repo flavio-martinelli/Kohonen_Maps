@@ -9,13 +9,14 @@ setPath(gitHubDirectory)
 Data = loadData('Tom');
 
 %% train
-Params = createParams(6, 3, true);
+Params = createParams(6, 2, true);
 Results = trainNetwork(Data.data, Params);
-Results = assignLabelToPrototypes(Data, Results.centers);
-visualizeTargetDigits(Data, Params, 1)
+Results = assignLabelToPrototypes(Data, Results);
+visualizeUpdateSteps(Results.updateSteps, Results.updateStepMean, Results.updateStepMeanDelta,  Params.maxIter, Params, 102)
 visualizeNetwork(Results.centers, 'trained network', 101);
 visualizeNetwork(Results.estimatedCentroids, 'learned labels in network', 202);
 visualizeCounts(Results.counts, Data.targetdigits, 201)
+visualizeTargetDigits(Data, Params, 1)
 
 %% optimize
 ResultOptim = optimizeHyperparameters(Data.data, Data.labels);

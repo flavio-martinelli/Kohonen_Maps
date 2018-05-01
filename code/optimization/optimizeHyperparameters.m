@@ -1,8 +1,7 @@
 function ResultOptim = optimizeHyperparameters(data, labels)
 
-
 % grid of hyperparameters
-sizeKGrid = linspace(6,10,5); N1 = length(sizeKGrid);
+sizeKGrid = linspace(6,10,4); N1 = length(sizeKGrid);
 sigmaGrid = linspace(1,5,5); N2 = length(sigmaGrid);
 
 % number of folds
@@ -49,7 +48,7 @@ for n1=1:N1
             Results = trainNetwork(data_training, Params);
             visualizeNetwork(Results.centers, 'trained network', 101);
             visualizeUpdateSteps(Results.updateSteps, Results.updateStepMean, Results.updateStepMeanDelta,  Params.maxIter, Params, 102)
-            Results = assignLabelToPrototypes(Data_training, Results.centers);
+            Results = assignLabelToPrototypes(Data_training, Results);
 
             % predict
             estimated_labels_training = getLabelsFromDigits(data_training, Results.estimatedCentroids, Results.estimatedLabels);

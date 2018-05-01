@@ -9,28 +9,32 @@ updateStepMeanDelta = [];
 old_centers = centers;
 
 % stopping criteria = iteration
-for t=1:Params.maxIter
+for iter=1:Params.maxIter
     
-    i=iR(t);
+    if mod(iter, round(Params.maxIter/10)) == 0 || iter == 1
+        disp(['iter: ', num2str(iter)])
+    end
+    
+    i=iR(iter);
     new_centers = som_step(old_centers, data(i,:), Params.neighbor, Params.eta, Params.sigma);
-    updateSteps(1,t) = getUpdateStep(new_centers, old_centers);
+    updateSteps(1,iter) = getUpdateStep(new_centers, old_centers);
     old_centers = new_centers;
     
-    if mod(t,Params.tolUpdateMeanWindow) == 0
-        if t >= Params.tolUpdateMeanWindow
-            updateStepMean = [updateStepMean, mean(updateSteps(t-Params.tolUpdateMeanWindow+1:t)) ];
+    if mod(iter,Params.tolUpdateMeanWindow) == 0
+        if iter >= Params.tolUpdateMeanWindow
+            updateStepMean = [updateStepMean, mean(updateSteps(iter-Params.tolUpdateMeanWindow+1:iter)) ];
         end
-        if t>= 2*Params.tolUpdateMeanWindow
+        if iter>= 2*Params.tolUpdateMeanWindow
             updateStepMeanDelta = [updateStepMeanDelta, abs(updateStepMean(end) - updateStepMean(end-1))];
         end
     end
     
     if Params.displayTraining
-        if mod(t, Params.displayStep)==0 || t==1
-            visualizeNetwork(old_centers, ['network state at iteration: ', num2str(t)], 101)
+        if mod(iter, Params.displayStep)==0 || iter==1
+            visualizeNetwork(old_centers, ['network state at iteration: ', num2str(iter)], 101)
         end
-        if mod(t, Params.displayStep)==0 && t>= 2*Params.tolUpdateMeanWindow
-            visualizeUpdateSteps(updateSteps, updateStepMean, updateStepMeanDelta,  t, Params, 102)
+        if mod(iter, Params.displayStep)==0 && iter>= 2*Params.tolUpdateMeanWindow
+            visualizeUpdateSteps(updateSteps, updateStepMean, updateStepMeanDelta,  iter, Params, 102)
         end
     end
     
