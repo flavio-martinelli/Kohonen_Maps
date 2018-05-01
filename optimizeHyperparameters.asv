@@ -1,0 +1,58 @@
+function [outputArg1,outputArg2] = optimizeHyperparameters(Data)
+
+
+
+Results = trainNetwork(Data.data, Params);
+Results = assignDigitsToPrototypes(Data, Results);
+
+% grid of hyperparameters
+h1Grid = linspace(6,10,1); Nh1 = length(h1Grid);
+h2Grid = linspace(0,5,5); Nh2 = length(h2Grid);
+
+% number of folds
+k_fold = 10;
+
+%  cvpartition
+cp = cvpartition(labels,'kfold', k_fold);
+
+% store losses
+error_train = zeros(Nh1, Nh2, k_fold);
+error_test = zeros(Nh1, Nh2, k_fold);
+
+for n1=1:Nh1
+    
+    % update parameters
+    Params = createParams(h1Grid(n1), h2Grid(n2));
+    
+    for k=1:k_fold
+        
+        % datasets
+        data_training = data(cp.training(k), :);
+        data_testing = data(cp.test(k), :);
+        
+        % train
+        Results = trainNetwork(data_training, Params);
+        
+        % errors
+        error_train(n1,n2,k) = gerError(data_training, Results.centers);
+        error_test((n1,n2,k) = gerError(data_test, Results.centers);
+
+        
+    end
+    
+end
+
+% mean and var losses
+mean_loss_tr = mean(loss_tr_all, 2); var_loss_tr = var(loss_tr_all, 0, 2);
+mean_loss_te = mean(loss_te_all, 2); var_loss_te = var(loss_te_all, 0, 2);
+
+% plot with error bar
+figure; hold on
+errorbar(mean_loss_tr, var_loss_tr, 'b-')
+errorbar(mean_loss_te, var_loss_te, 'r-')
+xlabel('number of feature')
+ylabel('loss')
+legend('train', 'test')
+
+end
+

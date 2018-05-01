@@ -1,8 +1,8 @@
-function Results = trainNetwork(Data, Params)
+function Results = trainNetwork(data, Params)
 
 rng(Params.seed)
 centers = rand(Params.sizeK^2,Params.dim)*Params.range;
-iR=mod(randperm(Params.maxIter), size(Data.data, 1)+1); iR(iR==0) = 1;
+iR=mod(randperm(Params.maxIter), size(data, 1)+1); iR(iR==0) = 1;
 updateSteps = zeros(1, Params.maxIter);
 old_centers = centers;
 
@@ -13,7 +13,7 @@ switch Params.stoppingCriteria
         
         for t=1:Params.maxIter
             i=iR(t);
-            new_centers = som_step(old_centers, Data.data(i,:), Params.neighbor, Params.eta, Params.sigma);
+            new_centers = som_step(old_centers, data(i,:), Params.neighbor, Params.eta, Params.sigma);
             updateSteps(1,t) = getUpdateStep(new_centers, old_centers);
             old_centers = new_centers;
             if Params.displayTraining && (mod(t, Params.displayStep)==0 || t==1)
@@ -32,9 +32,10 @@ switch Params.stoppingCriteria
         while check_continueTraining
             
             i=iR(t);
-            new_centers = som_step(old_centers, Data.data(i,:), Params.neighbor, Params.eta, Params.sigma);
+            new_centers = som_step(old_centers, data(i,:), Params.neighbor, Params.eta, Params.sigma);
             updateSteps(t) = getUpdateStep(new_centers, old_centers);
             old_centers = new_centers;
+            
             if mod(t,Params.tolUpdateMeanWindow) == 0
                 if t >= Params.tolUpdateMeanWindow
                     updateStepMean = [updateStepMean, mean(updateSteps(t-Params.tolUpdateMeanWindow+1:t)) ];
@@ -56,13 +57,13 @@ switch Params.stoppingCriteria
             if t>= 2*Params.tolUpdateMeanWindow
                 check_updateStepMeanDelta = updateStepMeanDelta(end) > Params.tolUpdateStep;
                 check_maxIter = t<Params.maxIter;
-                check_continueTraining =  (check_updateStepMeanDelta && check_maxIter);
                 if ~check_updateStepMeanDelta
                     disp('stopping criteria: mean difference of the update step smaller than the threshold')
                 end
                 if ~check_maxIter
                     disp('stopping criteria: maximum number of iterations reached')
                 end
+                check_continueTraining =  (check_updateStepMeanDelta && check_maxIter);
             end
             
             t = t+1;

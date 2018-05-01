@@ -7,12 +7,14 @@ numberOfPrototypes = size(Results.centers,1);
 labelCountInPrototypes = zeros(numberOfPrototypes, numberOfUniqueLabels);
 estimatedLabelOfPrototypes = zeros(numberOfPrototypes, 1);
 estimatedDataOfPrototypes = zeros(numberOfPrototypes, size(Results.centers,2));
+error = 0;
 
 for dataIndex=1:numberOfData
-    assignedPrototypeIndex = assignOneDigitToOnePrototype(Data.data(dataIndex,:), Results.centers);
+    [distanceToPrototype, assignedPrototypeIndex] = assignOneDigitToOnePrototype(Data.data(dataIndex,:), Results.centers);
     labelOfData = Data.labels(dataIndex);
     indexInUniqueLabels = find(uniqueLabels == labelOfData);
     labelCountInPrototypes(assignedPrototypeIndex, indexInUniqueLabels) = labelCountInPrototypes(assignedPrototypeIndex, indexInUniqueLabels) + 1;
+    error = error + distanceToPrototype;
 end
 
 for p=1:numberOfPrototypes
@@ -25,6 +27,7 @@ end
 Results.labelCountInPrototypes = labelCountInPrototypes;
 Results.estimatedLabelOfPrototypes = estimatedLabelOfPrototypes;
 Results.estimatedDataOfPrototypes = estimatedDataOfPrototypes;
+Results.error = error;
 
 end
 
