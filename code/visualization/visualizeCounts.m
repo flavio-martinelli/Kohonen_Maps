@@ -1,4 +1,4 @@
-function visualizeLabelProbabilityInNetwork(labelCount, labelNames, figureIndex)
+function visualizeCounts(labelCount, labelNames, figureIndex)
 
 sizeK = sqrt(size(labelCount,1));
 

@@ -34,7 +34,8 @@ for n1=1:Nh1
             
             % train
             Results = trainNetwork(data_training, Params);
-            
+            Results = assignDigitsToPrototypes(data_training, Results);
+
             % errors
             error_train(n1,n2,k) = gerError(data_training, Results.centers);
             error_test(n1,n2,k) = gerError(data_test, Results.centers);
