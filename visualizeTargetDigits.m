@@ -1,6 +1,7 @@
-function visualizeTargetDigits(Data, Params)
+function visualizeTargetDigits(Data, Params, figureNumber)
 
-figure
+figure(figureNumber)
+
 for i=1:4
     subplot(2,2,i)
     digits_i = Data.data(Data.labels==Data.targetdigits(i),:);

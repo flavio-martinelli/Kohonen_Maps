@@ -1,0 +1,15 @@
+close all
+clear variables
+clc
+
+Data = loadData('Tom');
+Params = createParams();
+visualizeTargetDigits(Data, Params, 1)
+Results = trainNetwork(Data, Params);
+visualizeNetwork(Results.centers, 'trained network', 100);
+Results = assignDigitsToPrototypes(Data, Results);
+visualizeLabelProbabilityInNetwork(Results.labelCountInPrototypes, Data.targetdigits, 101)
+visualizeNetwork(Results.estimatedDataOfPrototypes, 'learned labels in network', 102);
+
+workingPath = 'D:\Documents\etudes\epfl\cours\Unsupervised_and_Reinforcement_Learning_in_Neural_Networks\miniproject1\Kohonen_Maps';
+saveFigure(figureNumber, figureName, path, type

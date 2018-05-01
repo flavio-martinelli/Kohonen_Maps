@@ -8,9 +8,10 @@ labelNames = categorical(string(labelNames));
 for i=1:sizeK^2
     subplot(sizeK,sizeK,i)
     bar(labelNames, labelCount(i,:))
-    ylabel('counts')
-    xlabel('labels')
+%     ylabel('counts')
+%     xlabel('labels')
     grid minor
 end
+
 end
 

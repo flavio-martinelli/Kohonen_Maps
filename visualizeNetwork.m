@@ -11,7 +11,7 @@ for i=1:sizeK^2
     axis off
 end
 
-suptitle(title)
+% suptitle(title)
 
 end
 

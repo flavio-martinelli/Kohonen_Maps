@@ -17,7 +17,7 @@ switch Params.stoppingCriteria
             updateSteps(1,t) = getUpdateStep(new_centers, old_centers);
             old_centers = new_centers;
             if Params.displayTraining && (mod(t, Params.displayStep)==0 || t==1)
-                visualizeTrainedNetwork(old_centers, ['network state at iteration: ', num2str(t)], 100)
+                visualizeNetwork(old_centers, ['network state at iteration: ', num2str(t)], 101)
             end
         end
         
@@ -46,10 +46,10 @@ switch Params.stoppingCriteria
             
             if Params.displayTraining
                 if mod(t, Params.displayStep)==0 || t==1
-                    visualizeNetwork(old_centers, ['network state at iteration: ', num2str(t)], 100)
+                    visualizeNetwork(old_centers, ['network state at iteration: ', num2str(t)], 101)
                 end
                 if mod(t, Params.displayStep)==0 && t>= 2*Params.tolUpdateMeanWindow
-                    visualizeUpdateSteps(updateSteps, updateStepMean, updateStepMeanDelta,  t, Params, 101)
+                    visualizeUpdateSteps(updateSteps, updateStepMean, updateStepMeanDelta,  t, Params, 102)
                 end
             end
             
