@@ -38,6 +38,8 @@ end
 
 Results.centers = new_centers;
 Results.updateSteps = updateSteps;
+Results.updateStepMean = updateStepMean;
+Results.updateStepMeanDelta = updateStepMeanDelta;
 
 end
 
