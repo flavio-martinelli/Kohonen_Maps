@@ -1,12 +1,11 @@
 function Results = trainNetwork(data, Params)
 
-rng(Params.seed)
-centers = rand(Params.sizeK^2,Params.dim)*Params.range;
 iR=mod(randperm(Params.maxIter), size(data, 1)+1); iR(iR==0) = 1;
 Results.updateSteps = zeros(1, Params.maxIter);
 Results.updateStepMean = [];
 Results.updateStepMeanDelta = [];
-Results.centers = centers;
+% rng(Params.seed);
+Results.centers = rand(Params.sizeK^2,Params.dim)*Params.range;
 
 % stopping criteria = iteration
 for iter=1:Params.maxIter

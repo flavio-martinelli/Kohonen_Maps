@@ -7,7 +7,7 @@ sizeK = sqrt(size(network,1));
 [~, assignedPrototypeIndex]=min(sqrt(sum(abs(network-repmat(digit,sizeK^2,1)).^2,2)));
 
 % label of the prototype found
-labelOfDigit = labels(assignedPrototypeIndex);
+labelOfDigit = labels(assignedPrototypeIndex)
 
 end
 
