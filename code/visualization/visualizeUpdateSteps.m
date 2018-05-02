@@ -9,13 +9,13 @@ legend('||centers_{old} - centers_{new}||')
 grid on
 
 subplot(312)
-plot((1:length(updateStepMean))*Params.tolUpdateMeanWindow, updateStepMean)
+plot((1:length(updateStepMean))*Params.updateMeanWindow, updateStepMean)
 xlabel('iterations')
 legend('mean')
 grid minor
 
 subplot(313)
-plot((2:length(updateStepMeanDelta)+1)*Params.tolUpdateMeanWindow, updateStepMeanDelta)
+plot((2:length(updateStepMeanDelta)+1)*Params.updateMeanWindow, updateStepMeanDelta)
 xlabel('iterations')
 legend('mean difference')
 grid minor

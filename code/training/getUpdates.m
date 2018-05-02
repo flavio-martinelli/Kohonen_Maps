@@ -1,13 +1,13 @@
-function [updateSteps, updateStepMean, updateStepMeanDelta] = getUpdates(new_centers, old_centers, updateSteps, updateStepMean, updateStepMeanDelta, iter, Params)
+function Results = getUpdates(new_centers, Results, iter, Params)
 
-updateSteps(1,iter) = norm(new_centers - old_centers);
+Results.updateSteps(1,iter) = norm(new_centers - Results.centers);
 
 if mod(iter,Params.updateMeanWindow) == 0
     if iter >= Params.updateMeanWindow
-        updateStepMean = [updateStepMean, mean(updateSteps(iter-Params.updateMeanWindow+1:iter)) ];
+        Results.updateStepMean = [Results.updateStepMean, mean(Results.updateSteps(iter-Params.updateMeanWindow+1:iter)) ];
     end
     if iter>= 2*Params.updateMeanWindow
-        updateStepMeanDelta = [updateStepMeanDelta, abs(updateStepMean(end) - updateStepMean(end-1))];
+        Results.updateStepMeanDelta = [Results.updateStepMeanDelta, abs(Results.updateStepMean(end) - Results.updateStepMean(end-1))];
     end
 end
 

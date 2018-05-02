@@ -1,13 +1,13 @@
 function ResultOptim = optimizeHyperparameters(data, labels)
 
 % grid of hyperparameters
-sizeKGrid = linspace(6,8,3)
-sigmaGrid = linspace(2,5,3)
+sizeKGrid = linspace(6,10,5)
+sigmaGrid = linspace(2,6,5)
 N1 = length(sizeKGrid);
 N2 = length(sigmaGrid);
 
 % number of folds
-k_fold = 5
+k_fold = 10
 
 %  cvpartition
 numberOfData = size(data,1);

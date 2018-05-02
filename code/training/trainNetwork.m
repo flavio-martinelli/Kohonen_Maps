@@ -3,10 +3,10 @@ function Results = trainNetwork(data, Params)
 rng(Params.seed)
 centers = rand(Params.sizeK^2,Params.dim)*Params.range;
 iR=mod(randperm(Params.maxIter), size(data, 1)+1); iR(iR==0) = 1;
-updateSteps = zeros(1, Params.maxIter);
-updateStepMean = [];
-updateStepMeanDelta = [];
-old_centers = centers;
+Results.updateSteps = zeros(1, Params.maxIter);
+Results.updateStepMean = [];
+Results.updateStepMeanDelta = [];
+Results.centers = centers;
 
 % stopping criteria = iteration
 for iter=1:Params.maxIter
@@ -16,24 +16,17 @@ for iter=1:Params.maxIter
     end
     
     i=iR(iter);
-    new_centers = som_step(old_centers, data(i,:), Params.neighbor, Params.eta, Params.sigma);
-    old_centers = new_centers;
+    new_centers = som_step(Results.centers, data(i,:), Params.neighbor, Params.eta, Params.sigma);
     
     if Params.computeUdpates
-        [updateSteps, updateStepMean, updateStepMeanDelta] = getUpdates(new_centers, old_centers, updateSteps, updateStepMean, updateStepMeanDelta, iter, Params);
+        Results = getUpdates(new_centers, Results, iter, Params);
     end
     
     if Params.displayTraining
-        visualizeTrainingProcess(old_centers, iter, Params, 101, 102)
+        visualizeTrainingProcess(Results,  iter, Params, 101, 102)
     end
     
+    Results.centers = new_centers;
 end
-
-Results.centers = new_centers;
-    if Params.computeUdpates
-Results.updateSteps = updateSteps;
-Results.updateStepMean = updateStepMean;
-Results.updateStepMeanDelta = updateStepMeanDelta;
-
 end
 

@@ -18,7 +18,7 @@ visualizeNetwork(Results.estimatedCentroids, 'learned labels in network', 202);
 visualizeCounts(Results.counts, Data.targetdigits, 201)
 
 %% optimize
-ResultOptim = optimizeHyperparameters(Data.data(1:100,:), Data.labels(1:100));
+ResultOptim = optimizeHyperparameters(Data.data, Data.labels);
 visualizeOptimizationResult(ResultOptim)
 
 %% save 
