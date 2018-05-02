@@ -1,11 +1,13 @@
 function ResultOptim = optimizeHyperparameters(data, labels)
 
 % grid of hyperparameters
-sizeKGrid = linspace(6,10,4); N1 = length(sizeKGrid);
-sigmaGrid = linspace(1,5,5); N2 = length(sigmaGrid);
+sizeKGrid = linspace(6,8,3)
+sigmaGrid = linspace(2,5,3)
+N1 = length(sizeKGrid);
+N2 = length(sigmaGrid);
 
 % number of folds
-k_fold = 10;
+k_fold = 5
 
 %  cvpartition
 numberOfData = size(data,1);
@@ -20,8 +22,8 @@ for n1=1:N1
     for n2=1:N2
         
         disp('------------------------------------------')
-        disp(['sizeK =', num2str(sizeKGrid(n1))])
-        disp(['sigma =', num2str(sigmaGrid(n2))])
+        disp(['sizeK = ', num2str(sizeKGrid(n1))])
+        disp(['sigma = ', num2str(sigmaGrid(n2))])
 
         % update parameters
         Params = createParams(sizeKGrid(n1), sigmaGrid(n2), false);
@@ -47,7 +49,6 @@ for n1=1:N1
             % train
             Results = trainNetwork(data_training, Params);
             visualizeNetwork(Results.centers, 'trained network', 101);
-            visualizeUpdateSteps(Results.updateSteps, Results.updateStepMean, Results.updateStepMeanDelta,  Params.maxIter, Params, 102)
             Results = assignLabelToPrototypes(Data_training, Results);
 
             % predict
@@ -57,11 +58,15 @@ for n1=1:N1
             % error
             training_error(n1,n2,k) = getClassError(labels_training, estimated_labels_training);
             test_error(n1,n2,k) = getClassError(labels_test, estimated_labels_test);
+            
+            clear Results
+            clear Data_training
+            clear Data_test
 
         end
         
-        disp(['training error = ', num2str(mean(training_error(n1,n2,:)))])
-        disp(['test error = ', num2str(mean(test_error(n1,n2,:)))])
+        disp(['training error = ', num2str(round(mean(training_error(n1,n2,:)),2)*100), ' %'])
+        disp(['test error = ', num2str(round(mean(test_error(n1,n2,:)),2)*100), ' %'])
 
     end
 end

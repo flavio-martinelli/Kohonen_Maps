@@ -16,10 +16,9 @@ visualizeUpdateSteps(Results.updateSteps, Results.updateStepMean, Results.update
 visualizeNetwork(Results.centers, 'trained network', 101);
 visualizeNetwork(Results.estimatedCentroids, 'learned labels in network', 202);
 visualizeCounts(Results.counts, Data.targetdigits, 201)
-visualizeTargetDigits(Data, Params, 1)
 
 %% optimize
-ResultOptim = optimizeHyperparameters(Data.data, Data.labels);
+ResultOptim = optimizeHyperparameters(Data.data(1:100,:), Data.labels(1:100));
 visualizeOptimizationResult(ResultOptim)
 
 %% save 

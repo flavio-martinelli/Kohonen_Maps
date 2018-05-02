@@ -11,36 +11,26 @@ old_centers = centers;
 % stopping criteria = iteration
 for iter=1:Params.maxIter
     
-    if mod(iter, round(Params.maxIter/10)) == 0 || iter == 1
+    if Params.displayTraining && (mod(iter, round(Params.maxIter/5)) == 0 || iter == 1)
         disp(['iter: ', num2str(iter)])
     end
     
     i=iR(iter);
     new_centers = som_step(old_centers, data(i,:), Params.neighbor, Params.eta, Params.sigma);
-    updateSteps(1,iter) = getUpdateStep(new_centers, old_centers);
     old_centers = new_centers;
     
-    if mod(iter,Params.tolUpdateMeanWindow) == 0
-        if iter >= Params.tolUpdateMeanWindow
-            updateStepMean = [updateStepMean, mean(updateSteps(iter-Params.tolUpdateMeanWindow+1:iter)) ];
-        end
-        if iter>= 2*Params.tolUpdateMeanWindow
-            updateStepMeanDelta = [updateStepMeanDelta, abs(updateStepMean(end) - updateStepMean(end-1))];
-        end
+    if Params.computeUdpates
+        [updateSteps, updateStepMean, updateStepMeanDelta] = getUpdates(new_centers, old_centers, updateSteps, updateStepMean, updateStepMeanDelta, iter, Params);
     end
     
     if Params.displayTraining
-        if mod(iter, Params.displayStep)==0 || iter==1
-            visualizeNetwork(old_centers, ['network state at iteration: ', num2str(iter)], 101)
-        end
-        if mod(iter, Params.displayStep)==0 && iter>= 2*Params.tolUpdateMeanWindow
-            visualizeUpdateSteps(updateSteps, updateStepMean, updateStepMeanDelta,  iter, Params, 102)
-        end
+        visualizeTrainingProcess(old_centers, iter, Params, 101, 102)
     end
     
 end
 
 Results.centers = new_centers;
+    if Params.computeUdpates
 Results.updateSteps = updateSteps;
 Results.updateStepMean = updateStepMean;
 Results.updateStepMeanDelta = updateStepMeanDelta;
