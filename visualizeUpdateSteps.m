@@ -20,5 +20,7 @@ xlabel('iterations')
 title('mean difference over iteration')
 grid on
 
+pause(0.1)
+
 end
 

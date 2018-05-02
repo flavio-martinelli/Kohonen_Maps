@@ -2,7 +2,7 @@ close all
 clear variables
 clc
 
-Data = loadData('Flavio');
+Data = loadData('Poutine');
 visualizeTargetDigits(Data)
 Params = createParams();
 Results = trainNetwork(Data, Params);
