@@ -4,7 +4,7 @@ iR=mod(randperm(Params.maxIter), size(data, 1)+1); iR(iR==0) = 1;
 Results.updateSteps = zeros(1, Params.maxIter);
 Results.updateStepMean = [];
 Results.updateStepMeanDelta = [];
-% rng(Params.seed);
+%rng(Params.seed);
 Results.centers = rand(Params.sizeK^2,Params.dim)*Params.range;
 
 % stopping criteria = iteration

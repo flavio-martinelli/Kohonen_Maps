@@ -7,7 +7,7 @@ N1 = length(sizeKGrid);
 N2 = length(sigmaGrid);
 
 % number of folds
-k_fold = 10
+k_fold = 200
 
 %  cvpartition
 numberOfData = size(data,1);
@@ -34,8 +34,8 @@ for n1=1:N1
             
             % datasets
             data_training = data(cp.training(k), :);
-            data_test = data(cp.test(k), :);
             labels_training = labels(cp.training(k), :);
+            data_test = data(cp.test(k), :);
             labels_test = labels(cp.test(k), :);
             
             % structure
@@ -52,8 +52,8 @@ for n1=1:N1
             Results = assignLabelToPrototypes(Data_training, Results);
 
             % predict
-            estimated_labels_training = getLabelsFromDigits(data_training, Results.estimatedCentroids, Results.estimatedLabels);
-            estimated_labels_test = getLabelsFromDigits(data_test, Results.estimatedCentroids, Results.estimatedLabels);
+            estimated_labels_training = getLabelsFromDigits(data_training, Results.digitOfClusters, Results.labelOfClusters);
+            estimated_labels_test = getLabelsFromDigits(data_test, Results.digitOfClusters, Results.labelOfClusters);
             
             % error
             training_error(n1,n2,k) = getClassError(labels_training, estimated_labels_training);
