@@ -2,7 +2,7 @@ close all
 clear variables
 clc
 
-gitHubDirectory = 'C:\Users\utente\Documents\GitHub\Kohonen_Maps';
+gitHubDirectory = erase(pwd, '\code');
 setPath(gitHubDirectory)
 
 %% data
@@ -16,10 +16,10 @@ Results = assignLabelToPrototypes(Data, Results);
 visualizeUpdateSteps(Results.updateSteps, Results.updateStepMean, Results.updateStepMeanDelta,  Params.maxIter, Params, 102)
 visualizeNetwork(Results.centers, 'trained network', 101);
 visualizeNetwork(Results.digitOfClusters, 'learned labels in network', 202);
-visualizeCounts(Results.counts, Data.targetdigits, 201)
+visualizeCouResultOptim = optimizeHyperparametersDistance(Data.data);
+nts(Results.counts, Data.targetdigits, 201)
 
 %% optimize
-ResultOptim = optimizeHyperparameters(Data.data, Data.labels);
 visualizeOptimizationResult(ResultOptim)
 
 %% save 
