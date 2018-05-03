@@ -18,6 +18,7 @@ Data.labels = labels;
 Data.name = name;
 Data.targetdigits = targetdigits;
 Data.digitstoremove = digitstoremove;
+Data.labelSet = unique(labels);
 
 end
 
