@@ -12,6 +12,9 @@ for i=1:6
     labels(labels==digitstoremove(i)) = [];
 end
 
+% normalize
+data = normalizeData(data);
+
 % store
 Data.data = data;
 Data.labels = labels;

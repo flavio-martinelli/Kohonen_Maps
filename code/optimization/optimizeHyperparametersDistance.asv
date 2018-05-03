@@ -2,7 +2,7 @@ function ResultOptim = optimizeHyperparametersDistance(data)
 
 % grid of hyperparameters
 sizeKGrid = (6:10);
-sigmaGrid = (2:;
+sigmaGrid = (1:5);
 N1 = length(sizeKGrid);
 N2 = length(sigmaGrid);
 
@@ -53,8 +53,11 @@ for n1=1:N1
 end
 
 % optimal hyperparameters
+minimalErrorIndex = min(mean(test_error,3));
+[optimalSigma, optimalSizeK]= find(matrix==minimalErrorIndex);
+
 [~, minimalErrorIndex] = min(mean(test_error,3));
-[optimalSigma, optimalSizeK] = ind2sub(size(test_error) , minimalErrorIndex);
+ = ind2sub(size(test_error) , minimalErrorIndex);
 
 % store
 ResultOptim.test_error = test_error;

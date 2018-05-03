@@ -14,6 +14,7 @@ errorbar(mean_test_error(:), var_test_error(:), 'r-')
 xlabel('hyperparameter set index')
 ylabel('error')
 legend('train', 'test')
+grid on
 
 % imagesc
 figure

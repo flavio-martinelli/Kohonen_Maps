@@ -53,8 +53,9 @@ for n1=1:N1
 end
 
 % optimal hyperparameters
-[~, minimalErrorIndex] = min(mean(test_error,3));
-[optimalSigma, optimalSizeK] = ind2sub(size(test_error) , minimalErrorIndex);
+mean_test_error = mean(test_error,3);
+min_test_error = min(mean_test_error(:));
+[optimalSigma, optimalSizeK]= find(mean_test_error==min_test_error);
 
 % store
 ResultOptim.test_error = test_error;
