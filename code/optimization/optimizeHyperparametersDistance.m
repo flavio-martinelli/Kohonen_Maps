@@ -1,8 +1,8 @@
 function ResultOptim = optimizeHyperparametersDistance(data)
 
 % grid of hyperparameters
-sizeKGrid = (6:10);
-sigmaGrid = (1:5);
+sizeKGrid = (6:10)
+sigmaGrid = (1:5)
 N1 = length(sizeKGrid);
 N2 = length(sigmaGrid);
 

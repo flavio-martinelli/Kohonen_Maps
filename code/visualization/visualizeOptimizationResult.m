@@ -6,23 +6,16 @@ mean_test_error = mean(ResultOptim.test_error, 3);
 var_training_error = var(ResultOptim.training_error, 0, 3);
 var_test_error = var(ResultOptim.test_error, 0, 3);
 
-% errorbar
-figure 
-hold on
-errorbar(mean_training_error(:), var_training_error(:), 'b-')
-errorbar(mean_test_error(:), var_test_error(:), 'r-')
-xlabel('hyperparameter set index')
-ylabel('error')
-legend('train', 'test')
-grid on
-
 % imagesc
 figure
-imagesc(ResultOptim.sizeKGrid, ResultOptim.sigmaGrid, mean_test_error)
-xlabel('network size')
-ylabel('sigma neighborhood')
+imagesc(ResultOptim.sigmaGrid, ResultOptim.sizeKGrid, mean_test_error)
+set(gca,'YDir','normal')
+
+xlabel('sigma neighborhood','FontSize',12,'FontWeight','bold')
+ylabel('network size','FontSize',12,'FontWeight','bold')
+
 h = colorbar;
-ylabel(h, 'test error')
+ylabel(h, 'test error','FontSize',10,'FontWeight','bold')
 
 end
 

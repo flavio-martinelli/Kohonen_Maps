@@ -5,7 +5,7 @@ function params = createParams(sizeK, sigma, displayTraining)
 params.sizeK=sizeK; % set the size of the Kohonen map 
 params.sigma=sigma; % set the width of the neighborhood via the width of the gaussian tha describes it
 
-params.maxIter = 5000; % maximum number of iteration
+params.maxIter = 20000; % maximum number of iteration
 params.eta = 0.1; %learning rate
 
 params.dim = 28*28; % dimension of the images
